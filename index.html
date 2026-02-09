@@ -1,842 +1,1857 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PixelCraft CSS Framework Test - Minecraft Theme</title>
+    <title>PixelCraft CSS - Framework CSS Bertema Minecraft</title>
     <link rel="stylesheet" href="PixelCraft.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Additional styles for the demo page */
-        .demo-section {
-            border: 4px solid #000;
-            margin-bottom: 32px;
-            padding: 16px;
-            background-color: #f5f5f5;
+        /* Custom Styles untuk Landing Page */
+        :root {
+            --mc-primary-rgb: 139, 69, 19;
+            --mc-success-rgb: 124, 252, 0;
+            --mc-warning-rgb: 255, 215, 0;
+            --mc-danger-rgb: 255, 69, 0;
         }
         
-        .demo-title {
-            font-family: 'Press Start 2P', 'Courier New', monospace;
-            font-size: 1.5rem;
-            margin-bottom: 16px;
-            padding-bottom: 8px;
-            border-bottom: 4px solid #000;
+        /* Animasi Kustom */
+        @keyframes mc-glow {
+            0%, 100% { 
+                filter: drop-shadow(0 0 5px rgba(var(--mc-primary-rgb), 0.5));
+            }
+            50% { 
+                filter: drop-shadow(0 0 15px rgba(var(--mc-primary-rgb), 0.8));
+            }
         }
         
-        .demo-grid {
+        @keyframes mc-pulse-border {
+            0%, 100% { 
+                border-color: var(--mc-dirt-dark);
+            }
+            50% { 
+                border-color: var(--mc-gold);
+            }
+        }
+        
+        @keyframes mc-slide-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Global Styles */
+        body {
+            background-color: #1a1a1a;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(139, 69, 19, 0.1) 2%, transparent 2%),
+                radial-gradient(circle at 75% 75%, rgba(139, 69, 19, 0.1) 2%, transparent 2%),
+                radial-gradient(circle at 25% 75%, rgba(107, 52, 16, 0.1) 2%, transparent 2%),
+                radial-gradient(circle at 75% 25%, rgba(107, 52, 16, 0.1) 2%, transparent 2%);
+            background-size: 50px 50px;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(0deg, transparent 24%, rgba(0, 0, 0, 0.05) 25%, rgba(0, 0, 0, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, 0.05) 75%, rgba(0, 0, 0, 0.05) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(0, 0, 0, 0.05) 25%, rgba(0, 0, 0, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, 0.05) 75%, rgba(0, 0, 0, 0.05) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        /* Section Spacing */
+        section {
+            scroll-margin-top: 80px;
+        }
+        
+        /* Hero Section Enhanced */
+        .mc-hero {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--mc-dirt-dark) 0%, var(--mc-coal-dark) 100%);
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+        
+        .mc-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(45deg, transparent 48%, rgba(255, 255, 255, 0.05) 50%, transparent 52%),
+                linear-gradient(-45deg, transparent 48%, rgba(255, 255, 255, 0.05) 50%, transparent 52%);
+            background-size: 60px 60px;
+            animation: mc-shine 20s linear infinite;
+        }
+        
+        @keyframes mc-shine {
+            0% { background-position: 0 0; }
+            100% { background-position: 60px 60px; }
+        }
+        
+        .mc-hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 6rem 0;
+        }
+        
+        .mc-hero-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            line-height: 1.2;
+            text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+            animation: mc-glow 3s ease-in-out infinite;
+        }
+        
+        .mc-hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            opacity: 0.9;
+        }
+        
+        /* Feature Cards Enhanced */
+        .mc-feature-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 4px solid var(--mc-dirt-dark);
+        }
+        
+        .mc-feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--mc-gold);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .mc-feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--mc-grass), var(--mc-diamond), var(--mc-gold));
+            z-index: 1;
+        }
+        
+        .mc-feature-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .mc-feature-card:hover .mc-feature-icon {
+            transform: rotateY(180deg) scale(1.1);
+        }
+        
+        /* Component Demo Styles */
+        .mc-demo-container {
+            background: var(--mc-stone-light);
+            border: 8px solid var(--mc-stone-dark);
+            position: relative;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .mc-demo-container::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border: 4px solid var(--mc-dirt);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .mc-demo-title {
+            position: relative;
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            margin-bottom: 2rem;
+            background: var(--mc-dirt);
+            color: white;
+            border: 4px solid var(--mc-dirt-dark);
+        }
+        
+        .mc-demo-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 10%;
+            width: 80%;
+            height: 4px;
+            background: var(--mc-grass);
+        }
+        
+        /* Color Swatch Grid */
+        .mc-color-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 16px;
-            margin-top: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
         }
         
-        .demo-item {
-            padding: 12px;
-            border: 2px solid #000;
-            text-align: center;
+        .mc-color-swatch {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 4px solid #000;
+        }
+        
+        .mc-color-swatch:hover {
+            transform: scale(1.1) rotate(5deg);
+            z-index: 10;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .mc-color-swatch::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 50%, rgba(0, 0, 0, 0.1) 50%);
+            pointer-events: none;
+        }
+        
+        /* Interactive Demo Styles */
+        .mc-interactive-demo {
+            background: var(--mc-snow-light);
+            border: 6px solid var(--mc-stone);
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .mc-interactive-demo::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            pointer-events: none;
+        }
+        
+        /* Stats Counter Animation */
+        .mc-stats-counter {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--mc-gold), var(--mc-diamond));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+        
+        .mc-stats-counter::after {
+            content: '+';
+            color: var(--mc-grass);
+        }
+        
+        /* Code Block Styling */
+        .mc-code-block {
+            background: var(--mc-coal);
+            border: 4px solid var(--mc-coal-dark);
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
-        }
-        
-        .demo-color-box {
-            width: 100%;
-            height: 60px;
-            margin-bottom: 8px;
-            border: 2px solid #000;
-        }
-        
-        .code-block {
-            background-color: #2f4f4f;
-            color: #f8f8ff;
-            padding: 12px;
-            font-family: 'Courier New', monospace;
-            border: 4px solid #000;
-            margin: 16px 0;
+            padding: 1.5rem;
+            position: relative;
             overflow-x: auto;
         }
         
-        .component-demo {
-            padding: 16px;
-            border: 4px solid #000;
-            margin: 16px 0;
-            background-color: #fff;
+        .mc-code-block::before {
+            content: 'HTML';
+            position: absolute;
+            top: -12px;
+            left: 1rem;
+            background: var(--mc-coal-dark);
+            color: var(--mc-snow);
+            padding: 0.25rem 1rem;
+            font-family: var(--mc-font-pixel);
+            font-size: 0.75rem;
+            border: 2px solid #000;
         }
         
-        body {
-            background-color: #f0f0f0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        /* Download Card */
+        .mc-download-card {
+            border: 6px solid var(--mc-obsidian);
+            background: linear-gradient(135deg, var(--mc-stone-light) 0%, var(--mc-snow-light) 100%);
+            position: relative;
+            overflow: hidden;
         }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .mc-download-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(45deg, transparent 45%, rgba(0, 0, 0, 0.05) 50%, transparent 55%),
+                linear-gradient(-45deg, transparent 45%, rgba(0, 0, 0, 0.05) 50%, transparent 55%);
+            background-size: 20px 20px;
+            animation: mc-shine 10s linear infinite;
         }
         
-        .header {
-            text-align: center;
-            padding: 32px 0;
-            background-color: #8B4513;
+        /* Footer Styles */
+        .mc-footer {
+            background: linear-gradient(180deg, var(--mc-coal-dark) 0%, #000 100%);
+            border-top: 8px solid var(--mc-dirt-dark);
+            position: relative;
+            clip-path: polygon(0 20px, 100% 0, 100% 100%, 0 100%);
+        }
+        
+        .mc-footer::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, 
+                var(--mc-grass) 0%, 
+                var(--mc-water) 25%, 
+                var(--mc-lava) 50%, 
+                var(--mc-gold) 75%, 
+                var(--mc-diamond) 100%);
+        }
+        
+        /* Responsive Utilities */
+        @media (max-width: 768px) {
+            .mc-hero-content {
+                padding: 4rem 0;
+            }
+            
+            .mc-demo-container {
+                padding: 1rem;
+            }
+            
+            .mc-color-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+            
+            section {
+                scroll-margin-top: 60px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .mc-hero-content {
+                padding: 3rem 0;
+            }
+            
+            .mc-color-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .mc-demo-container {
+                padding: 0.5rem;
+            }
+        }
+        
+        /* Scroll Progress Bar */
+        .mc-scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--mc-grass), var(--mc-diamond));
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+        
+        /* Back to Top Button */
+        .mc-back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--mc-dirt);
+            border: 4px solid var(--mc-dirt-dark);
             color: white;
-            border-bottom: 8px solid #000;
-            margin-bottom: 32px;
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 24px;
-            margin-top: 48px;
-            background-color: #2F4F4F;
-            color: white;
-            border-top: 8px solid #000;
-        }
-        
-        .responsive-test {
+            border-radius: 0;
             display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
         }
         
-        .responsive-box {
-            flex: 1;
-            min-width: 200px;
-            padding: 16px;
-            border: 4px solid #000;
-            text-align: center;
+        .mc-back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .mc-back-to-top:hover {
+            background: var(--mc-dirt-light);
+            transform: translateY(-5px);
+        }
+        
+        /* Section Animation */
+        .mc-section-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .mc-section-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Particle Background */
+        .mc-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .mc-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--mc-diamond);
+            border-radius: 0;
+            animation: float 20s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body class="mc-reset">
-    <!-- Header -->
-    <header class="header">
-        <h1 class="mc-font-pixel mc-text-4xl">PixelCraft CSS Framework</h1>
-        <p class="mc-font-pixel mc-text-lg mc-mt-3">A Minecraft-themed CSS framework for pixel-perfect designs</p>
-        <p class="mc-font-mono mc-text-base mc-mt-2">Testing all available classes from PixelCraft.css</p>
-    </header>
+    <!-- Scroll Progress Bar -->
+    <div class="mc-scroll-progress" id="scrollProgress"></div>
     
-    <div class="mc-container">
-        <!-- Section 1: Background Colors -->
-        <section class="demo-section">
-            <h2 class="demo-title">Background Colors</h2>
-            <p>All background color utility classes:</p>
-            
-            <div class="demo-grid">
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-dirt"></div>
-                    .mc-bg-dirt
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-dirt-dark"></div>
-                    .mc-bg-dirt-dark
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-dirt-light"></div>
-                    .mc-bg-dirt-light
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-grass"></div>
-                    .mc-bg-grass
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-grass-dark"></div>
-                    .mc-bg-grass-dark
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-grass-light"></div>
-                    .mc-bg-grass-light
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-stone"></div>
-                    .mc-bg-stone
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-stone-dark"></div>
-                    .mc-bg-stone-dark
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-stone-light"></div>
-                    .mc-bg-stone-light
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-wood"></div>
-                    .mc-bg-wood
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-wood-dark"></div>
-                    .mc-bg-wood-dark
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-wood-light"></div>
-                    .mc-bg-wood-light
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-water"></div>
-                    .mc-bg-water
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-water-dark"></div>
-                    .mc-bg-water-dark
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-water-light"></div>
-                    .mc-bg-water-light
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-lava"></div>
-                    .mc-bg-lava
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-lava-dark"></div>
-                    .mc-bg-lava-dark
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-lava-light"></div>
-                    .mc-bg-lava-light
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-diamond"></div>
-                    .mc-bg-diamond
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-diamond-dark"></div>
-                    .mc-bg-diamond-dark
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-diamond-light"></div>
-                    .mc-bg-diamond-light
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-gold"></div>
-                    .mc-bg-gold
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-gold-dark"></div>
-                    .mc-bg-gold-dark
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-gold-light"></div>
-                    .mc-bg-gold-light
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-iron"></div>
-                    .mc-bg-iron
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-iron-dark"></div>
-                    .mc-bg-iron-dark
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-iron-light"></div>
-                    .mc-bg-iron-light
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-coal"></div>
-                    .mc-bg-coal
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-coal-dark"></div>
-                    .mc-bg-coal-dark
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-coal-light"></div>
-                    .mc-bg-coal-light
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-obsidian"></div>
-                    .mc-bg-obsidian
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-obsidian-dark"></div>
-                    .mc-bg-obsidian-dark
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-obsidian-light"></div>
-                    .mc-bg-obsidian-light
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-nether"></div>
-                    .mc-bg-nether
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-nether-dark"></div>
-                    .mc-bg-nether-dark
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-nether-light"></div>
-                    .mc-bg-nether-light
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-end"></div>
-                    .mc-bg-end
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-end-dark"></div>
-                    .mc-bg-end-dark
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-end-light"></div>
-                    .mc-bg-end-light
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-sand"></div>
-                    .mc-bg-sand
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-sand-dark"></div>
-                    .mc-bg-sand-dark
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-sand-light"></div>
-                    .mc-bg-sand-light
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-snow"></div>
-                    .mc-bg-snow
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-snow-dark"></div>
-                    .mc-bg-snow-dark
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-snow-light"></div>
-                    .mc-bg-snow-light
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-primary"></div>
-                    .mc-bg-primary
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-secondary"></div>
-                    .mc-bg-secondary
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-success"></div>
-                    .mc-bg-success
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-danger"></div>
-                    .mc-bg-danger
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-warning"></div>
-                    .mc-bg-warning
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-info"></div>
-                    .mc-bg-info
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-light"></div>
-                    .mc-bg-light
-                </div>
-                <div class="demo-item">
-                    <div class="demo-color-box mc-bg-dark"></div>
-                    .mc-bg-dark
-                </div>
-            </div>
-        </section>
-        
-        <!-- Section 2: Text Colors -->
-        <section class="demo-section">
-            <h2 class="demo-title">Text Colors</h2>
-            <p>All text color utility classes (applied to text inside colored boxes for visibility):</p>
-            
-            <div class="demo-grid">
-                <div class="demo-item mc-bg-snow">
-                    <div class="mc-text-dirt">.mc-text-dirt</div>
-                </div>
-                <div class="demo-item mc-bg-snow">
-                    <div class="mc-text-dirt-dark">.mc-text-dirt-dark</div>
-                </div>
-                <div class="demo-item mc-bg-snow">
-                    <div class="mc-text-dirt-light">.mc-text-dirt-light</div>
-                </div>
-                <div class="demo-item mc-bg-coal">
-                    <div class="mc-text-grass">.mc-text-grass</div>
-                </div>
-                <div class="demo-item mc-bg-snow">
-                    <div class="mc-text-grass-dark">.mc-text-grass-dark</div>
-                </div>
-                <div class="demo-item mc-bg-coal">
-                    <div class="mc-text-grass-light">.mc-text-grass-light</div>
-                </div>
-                <div class="demo-item mc-bg-snow">
-                    <div class="mc-text-stone">.mc-text-stone</div>
-                </div>
-                <div class="demo-item mc-bg-snow">
-                    <div class="mc-text-stone-dark">.mc-text-stone-dark</div>
-                </div>
-                <div class="demo-item mc-bg-snow">
-                    <div class="mc-text-stone-light">.mc-text-stone-light</div>
-                </div>
-                <div class="demo-item mc-bg-snow">
-                    <div class="mc-text-wood">.mc-text-wood</div>
-                </div>
-                <div class="demo-item mc-bg-snow">
-                    <div class="mc-text-water">.mc-text-water</div>
-                </div>
-                <div class="demo-item mc-bg-snow">
-                    <div class="mc-text-lava">.mc-text-lava</div>
-                </div>
-                <div class="demo-item mc-bg-coal">
-                    <div class="mc-text-diamond">.mc-text-diamond</div>
-                </div>
-                <div class="demo-item mc-bg-coal">
-                    <div class="mc-text-gold">.mc-text-gold</div>
-                </div>
-                <div class="demo-item mc-bg-coal">
-                    <div class="mc-text-iron">.mc-text-iron</div>
-                </div>
-                <div class="demo-item mc-bg-snow">
-                    <div class="mc-text-coal">.mc-text-coal</div>
-                </div>
-                <div class="demo-item mc-bg-snow">
-                    <div class="mc-text-obsidian">.mc-text-obsidian</div>
-                </div>
-                <div class="demo-item mc-bg-snow">
-                    <div class="mc-text-nether">.mc-text-nether</div>
-                </div>
-                <div class="demo-item mc-bg-snow">
-                    <div class="mc-text-end">.mc-text-end</div>
-                </div>
-                <div class="demo-item mc-bg-coal">
-                    <div class="mc-text-sand">.mc-text-sand</div>
-                </div>
-                <div class="demo-item mc-bg-coal">
-                    <div class="mc-text-snow">.mc-text-snow</div>
-                </div>
-                <div class="demo-item mc-bg-snow">
-                    <div class="mc-text-primary">.mc-text-primary</div>
-                </div>
-                <div class="demo-item mc-bg-snow">
-                    <div class="mc-text-secondary">.mc-text-secondary</div>
-                </div>
-                <div class="demo-item mc-bg-coal">
-                    <div class="mc-text-success">.mc-text-success</div>
-                </div>
-                <div class="demo-item mc-bg-snow">
-                    <div class="mc-text-danger">.mc-text-danger</div>
-                </div>
-                <div class="demo-item mc-bg-coal">
-                    <div class="mc-text-warning">.mc-text-warning</div>
-                </div>
-                <div class="demo-item mc-bg-coal">
-                    <div class="mc-text-info">.mc-text-info</div>
-                </div>
-                <div class="demo-item mc-bg-coal">
-                    <div class="mc-text-light">.mc-text-light</div>
-                </div>
-                <div class="demo-item mc-bg-snow">
-                    <div class="mc-text-dark">.mc-text-dark</div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Section 3: Typography -->
-        <section class="demo-section">
-            <h2 class="demo-title">Typography</h2>
-            <p>Font sizes, weights, families, and text alignment:</p>
-            
-            <div class="component-demo">
-                <div class="mc-text-xs mc-mb-2">Extra Small Text (.mc-text-xs)</div>
-                <div class="mc-text-sm mc-mb-2">Small Text (.mc-text-sm)</div>
-                <div class="mc-text-base mc-mb-2">Base Text (.mc-text-base)</div>
-                <div class="mc-text-lg mc-mb-2">Large Text (.mc-text-lg)</div>
-                <div class="mc-text-xl mc-mb-2">Extra Large Text (.mc-text-xl)</div>
-                <div class="mc-text-2xl mc-mb-2">2X Large Text (.mc-text-2xl)</div>
-                <div class="mc-text-3xl mc-mb-2">3X Large Text (.mc-text-3xl)</div>
-                <div class="mc-text-4xl mc-mb-2">4X Large Text (.mc-text-4xl)</div>
-                <div class="mc-text-5xl mc-mb-2">5X Large Text (.mc-text-5xl)</div>
-                
-                <div class="mc-mt-4 mc-mb-2 mc-font-normal">Normal Font Weight (.mc-font-normal)</div>
-                <div class="mc-mb-2 mc-font-medium">Medium Font Weight (.mc-font-medium)</div>
-                <div class="mc-mb-2 mc-font-bold">Bold Font Weight (.mc-font-bold)</div>
-                <div class="mc-mb-2 mc-font-black">Black Font Weight (.mc-font-black)</div>
-                
-                <div class="mc-mt-4 mc-mb-2 mc-font-sans">Sans-serif Font (.mc-font-sans)</div>
-                <div class="mc-mb-2 mc-font-mono">Monospace Font (.mc-font-mono)</div>
-                <div class="mc-mb-2 mc-font-pixel">Pixel Font (.mc-font-pixel)</div>
-                
-                <div class="mc-mt-4">
-                    <div class="mc-text-left mc-border mc-p-2 mc-mb-2">Left Aligned Text (.mc-text-left)</div>
-                    <div class="mc-text-center mc-border mc-p-2 mc-mb-2">Center Aligned Text (.mc-text-center)</div>
-                    <div class="mc-text-right mc-border mc-p-2 mc-mb-2">Right Aligned Text (.mc-text-right)</div>
-                    <div class="mc-text-justify mc-border mc-p-2 mc-mb-2">Justified Text (.mc-text-justify) - This text is justified to fill the container width evenly.</div>
-                </div>
-                
-                <div class="mc-mt-4">
-                    <div class="mc-uppercase mc-mb-2">uppercase text (.mc-uppercase)</div>
-                    <div class="mc-lowercase mc-mb-2">LOWERCASE TEXT (.mc-lowercase)</div>
-                    <div class="mc-capitalize mc-mb-2">capitalized text (.mc-capitalize)</div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Section 4: Spacing Utilities -->
-        <section class="demo-section">
-            <h2 class="demo-title">Spacing Utilities</h2>
-            <p>Margin and padding utilities (showing a subset for demonstration):</p>
-            
-            <div class="component-demo">
-                <h3 class="mc-text-lg mc-font-bold">Margin Examples</h3>
-                <div class="mc-m-2 mc-bg-grass-light mc-border mc-p-2">Margin 2 on all sides (.mc-m-2)</div>
-                <div class="mc-mt-4 mc-bg-water-light mc-border mc-p-2">Margin top 4 (.mc-mt-4)</div>
-                <div class="mc-mb-4 mc-bg-lava-light mc-border mc-p-2">Margin bottom 4 (.mc-mb-4)</div>
-                <div class="mc-ml-4 mc-bg-gold-light mc-border mc-p-2">Margin left 4 (.mc-ml-4)</div>
-                <div class="mc-mr-4 mc-bg-diamond-light mc-border mc-p-2">Margin right 4 (.mc-mr-4)</div>
-                <div class="mc-mx-4 mc-bg-iron-light mc-border mc-p-2">Margin horizontal 4 (.mc-mx-4)</div>
-                <div class="mc-my-4 mc-bg-sand-light mc-border mc-p-2">Margin vertical 4 (.mc-my-4)</div>
-                
-                <h3 class="mc-text-lg mc-font-bold mc-mt-6">Padding Examples</h3>
-                <div class="mc-p-2 mc-bg-grass mc-border">Padding 2 on all sides (.mc-p-2)</div>
-                <div class="mc-pt-4 mc-bg-water mc-border mc-mt-2">Padding top 4 (.mc-pt-4)</div>
-                <div class="mc-pb-4 mc-bg-lava mc-border mc-mt-2">Padding bottom 4 (.mc-pb-4)</div>
-                <div class="mc-pl-4 mc-bg-gold mc-border mc-mt-2">Padding left 4 (.mc-pl-4)</div>
-                <div class="mc-pr-4 mc-bg-diamond mc-border mc-mt-2">Padding right 4 (.mc-pr-4)</div>
-                <div class="mc-px-4 mc-bg-iron mc-border mc-mt-2">Padding horizontal 4 (.mc-px-4)</div>
-                <div class="mc-py-4 mc-bg-sand mc-border mc-mt-2">Padding vertical 4 (.mc-py-4)</div>
-            </div>
-        </section>
-        
-        <!-- Section 5: Borders -->
-        <section class="demo-section">
-            <h2 class="demo-title">Border Utilities</h2>
-            <p>Border styles and colors:</p>
-            
-            <div class="demo-grid">
-                <div class="demo-item mc-border mc-p-3">Default Border (.mc-border)</div>
-                <div class="demo-item mc-border-thin mc-p-3">Thin Border (.mc-border-thin)</div>
-                <div class="demo-item mc-border-thick mc-p-3">Thick Border (.mc-border-thick)</div>
-                <div class="demo-item mc-border-none mc-p-3">No Border (.mc-border-none)</div>
-                <div class="demo-item mc-border mc-border-dirt mc-p-3">Dirt Border (.mc-border-dirt)</div>
-                <div class="demo-item mc-border mc-border-grass mc-p-3">Grass Border (.mc-border-grass)</div>
-                <div class="demo-item mc-border mc-border-stone mc-p-3">Stone Border (.mc-border-stone)</div>
-                <div class="demo-item mc-border mc-border-water mc-p-3">Water Border (.mc-border-water)</div>
-                <div class="demo-item mc-border mc-border-lava mc-p-3">Lava Border (.mc-border-lava)</div>
-                <div class="demo-item mc-border mc-border-diamond mc-p-3">Diamond Border (.mc-border-diamond)</div>
-                <div class="demo-item mc-border mc-border-gold mc-p-3">Gold Border (.mc-border-gold)</div>
-                <div class="demo-item mc-border mc-border-obsidian mc-p-3">Obsidian Border (.mc-border-obsidian)</div>
-            </div>
-        </section>
-        
-        <!-- Section 6: Display & Layout -->
-        <section class="demo-section">
-            <h2 class="demo-title">Display & Layout</h2>
-            <p>Display properties, flexbox, and grid utilities:</p>
-            
-            <div class="component-demo">
-                <h3 class="mc-text-lg mc-font-bold">Display Types</h3>
-                <div class="mc-block mc-bg-dirt-light mc-p-2 mc-mb-2">Block Display (.mc-block)</div>
-                <span class="mc-inline-block mc-bg-grass-light mc-p-2 mc-mb-2">Inline Block (.mc-inline-block)</span>
-                <span class="mc-inline mc-bg-water-light mc-p-2 mc-mb-2">Inline (.mc-inline)</span>
-                
-                <h3 class="mc-text-lg mc-font-bold mc-mt-6">Flexbox</h3>
-                <div class="mc-flex mc-flex-row mc-gap-2 mc-mb-4">
-                    <div class="mc-bg-dirt mc-p-3">Flex Item 1</div>
-                    <div class="mc-bg-dirt mc-p-3">Flex Item 2</div>
-                    <div class="mc-bg-dirt mc-p-3">Flex Item 3</div>
-                </div>
-                
-                <div class="mc-flex mc-flex-col mc-gap-2 mc-mb-4">
-                    <div class="mc-bg-grass mc-p-3">Flex Column Item 1</div>
-                    <div class="mc-bg-grass mc-p-3">Flex Column Item 2</div>
-                    <div class="mc-bg-grass mc-p-3">Flex Column Item 3</div>
-                </div>
-                
-                <div class="mc-flex mc-justify-between mc-items-center mc-bg-stone-light mc-p-3 mc-mb-4">
-                    <div class="mc-bg-dirt mc-p-2">Justify Between</div>
-                    <div class="mc-bg-dirt mc-p-2">Items Center</div>
-                    <div class="mc-bg-dirt mc-p-2">Flex Item</div>
-                </div>
-                
-                <h3 class="mc-text-lg mc-font-bold mc-mt-6">Grid System</h3>
-                <div class="mc-grid mc-grid-cols-3 mc-gap-4 mc-mb-4">
-                    <div class="mc-bg-lava mc-p-4">Grid Col 1</div>
-                    <div class="mc-bg-lava mc-p-4">Grid Col 2</div>
-                    <div class="mc-bg-lava mc-p-4">Grid Col 3</div>
-                    <div class="mc-col-span-2 mc-bg-gold mc-p-4">Span 2 Columns</div>
-                    <div class="mc-bg-gold mc-p-4">Regular Column</div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Section 7: Shadows & Effects -->
-        <section class="demo-section">
-            <h2 class="demo-title">Shadows & Effects</h2>
-            <p>Shadow effects and pixelated rendering:</p>
-            
-            <div class="demo-grid">
-                <div class="demo-item mc-shadow mc-p-4">Default Shadow (.mc-shadow)</div>
-                <div class="demo-item mc-shadow-sm mc-p-4">Small Shadow (.mc-shadow-sm)</div>
-                <div class="demo-item mc-shadow-lg mc-p-4">Large Shadow (.mc-shadow-lg)</div>
-                <div class="demo-item mc-shadow-inset mc-p-4">Inset Shadow (.mc-shadow-inset)</div>
-                <div class="demo-item mc-shadow-none mc-p-4">No Shadow (.mc-shadow-none)</div>
-                <div class="demo-item mc-pixelated mc-p-4">Pixelated Rendering (.mc-pixelated)</div>
-                <div class="demo-item mc-block-effect mc-bg-dirt mc-p-4">Block Effect (.mc-block-effect)</div>
-                <div class="demo-item mc-creeper-face mc-bg-grass mc-p-4" style="height: 100px;">Creeper Face (.mc-creeper-face)</div>
-                <div class="demo-item mc-animate-pulse mc-bg-lava mc-p-4">Animate Pulse (.mc-animate-pulse)</div>
-                <div class="demo-item mc-animate-shake mc-bg-water mc-p-4">Animate Shake (.mc-animate-shake)</div>
-            </div>
-        </section>
-        
-        <!-- Section 8: Components -->
-        <section class="demo-section">
-            <h2 class="demo-title">Components</h2>
-            <p>Pre-styled components:</p>
-            
-            <div class="component-demo">
-                <h3 class="mc-text-lg mc-font-bold">Buttons</h3>
-                <button class="mc-btn mc-btn-primary mc-m-1">Primary Button</button>
-                <button class="mc-btn mc-btn-secondary mc-m-1">Secondary Button</button>
-                <button class="mc-btn mc-btn-success mc-m-1">Success Button</button>
-                <button class="mc-btn mc-btn-danger mc-m-1">Danger Button</button>
-                <button class="mc-btn mc-btn-warning mc-m-1">Warning Button</button>
-                <button class="mc-btn mc-btn-info mc-m-1">Info Button</button>
-                <button class="mc-btn mc-btn-primary mc-btn-lg mc-m-1">Large Button</button>
-                <button class="mc-btn mc-btn-secondary mc-btn-sm mc-m-1">Small Button</button>
-                <button class="mc-btn mc-btn-success mc-btn-block mc-mt-2">Block Button</button>
-                
-                <h3 class="mc-text-lg mc-font-bold mc-mt-6">Cards</h3>
-                <div class="mc-card mc-w-50">
-                    <div class="mc-card-header">Card Header</div>
-                    <div class="mc-card-body">
-                        <h4 class="mc-font-bold mc-text-xl">Card Title</h4>
-                        <p>This is a card component with Minecraft styling. It has a header, body, and footer.</p>
-                    </div>
-                    <div class="mc-card-footer">Card Footer</div>
-                </div>
-                
-                <h3 class="mc-text-lg mc-font-bold mc-mt-6">Alerts</h3>
-                <div class="mc-alert mc-alert-success">Success Alert (.mc-alert-success)</div>
-                <div class="mc-alert mc-alert-danger">Danger Alert (.mc-alert-danger)</div>
-                <div class="mc-alert mc-alert-warning">Warning Alert (.mc-alert-warning)</div>
-                <div class="mc-alert mc-alert-info">Info Alert (.mc-alert-info)</div>
-                
-                <h3 class="mc-text-lg mc-font-bold mc-mt-6">Form Controls</h3>
-                <div class="mc-form-group">
-                    <label class="mc-form-label" for="exampleInput">Email address</label>
-                    <input type="email" class="mc-form-control" id="exampleInput" placeholder="Enter email">
-                </div>
-                <div class="mc-form-group">
-                    <label class="mc-form-label" for="exampleSelect">Select Example</label>
-                    <select class="mc-form-control" id="exampleSelect">
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                        <option>Option 3</option>
-                    </select>
-                </div>
-                
-                <h3 class="mc-text-lg mc-font-bold mc-mt-6">Badges</h3>
-                <span class="mc-badge mc-badge-primary mc-m-1">Primary Badge</span>
-                <span class="mc-badge mc-badge-secondary mc-m-1">Secondary Badge</span>
-                <span class="mc-badge mc-badge-success mc-m-1">Success Badge</span>
-                
-                <h3 class="mc-text-lg mc-font-bold mc-mt-6">Progress Bar</h3>
-                <div class="mc-progress mc-mb-2">
-                    <div class="mc-progress-bar" style="width: 25%"></div>
-                </div>
-                <div class="mc-progress mc-mb-2">
-                    <div class="mc-progress-bar" style="width: 50%"></div>
-                </div>
-                <div class="mc-progress mc-mb-2">
-                    <div class="mc-progress-bar" style="width: 75%"></div>
-                </div>
-                
-                <h3 class="mc-text-lg mc-font-bold mc-mt-6">Tooltip</h3>
-                <div class="mc-tooltip mc-m-4">
-                    Hover over me
-                    <span class="mc-tooltip-text">Tooltip text appears here!</span>
-                </div>
-                
-                <h3 class="mc-text-lg mc-font-bold mc-mt-6">Table</h3>
-                <table class="mc-table">
-                    <thead>
-                        <tr>
-                            <th>Material</th>
-                            <th>Rarity</th>
-                            <th>Uses</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Dirt</td>
-                            <td>Common</td>
-                            <td>Building, Farming</td>
-                        </tr>
-                        <tr>
-                            <td>Diamond</td>
-                            <td>Rare</td>
-                            <td>Tools, Armor</td>
-                        </tr>
-                        <tr>
-                            <td>Obsidian</td>
-                            <td>Uncommon</td>
-                            <td>Portals, Building</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        
-        <!-- Section 9: Navbar -->
-        <section class="demo-section">
-            <h2 class="demo-title">Navbar Component</h2>
-            <p>A fully styled Minecraft navbar:</p>
-            
-            <div class="component-demo mc-p-0">
-                <nav class="mc-navbar">
-                    <a href="#" class="mc-navbar-brand">Minecraft Site</a>
-                    <ul class="mc-navbar-nav">
-                        <li class="mc-nav-item">
-                            <a href="#" class="mc-nav-link">Home</a>
-                        </li>
-                        <li class="mc-nav-item">
-                            <a href="#" class="mc-nav-link">Blocks</a>
-                        </li>
-                        <li class="mc-nav-item">
-                            <a href="#" class="mc-nav-link">Mobs</a>
-                        </li>
-                        <li class="mc-nav-item">
-                            <a href="#" class="mc-nav-link">Biomes</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </section>
-        
-        <!-- Section 10: Responsive Utilities -->
-        <section class="demo-section">
-            <h2 class="demo-title">Responsive Utilities</h2>
-            <p>Responsive display classes (resize window to see effects):</p>
-            
-            <div class="responsive-test">
-                <div class="responsive-box mc-bg-dirt-light">
-                    <div class="mc-block mc-md-hidden mc-lg-hidden">Visible on small screens only</div>
-                    <div class="mc-hidden mc-md-block">Visible on medium+ screens</div>
-                </div>
-                <div class="responsive-box mc-bg-grass-light">
-                    <div class="mc-flex mc-flex-col mc-md-flex-row">
-                        <div class="mc-bg-dirt mc-p-2 mc-m-1">Flex Item 1</div>
-                        <div class="mc-bg-dirt mc-p-2 mc-m-1">Flex Item 2</div>
-                    </div>
-                </div>
-                <div class="responsive-box mc-bg-water-light">
-                    Responsive Box 3
-                </div>
-            </div>
-            
-            <div class="code-block mc-mt-4">
-                <code>
-                    .mc-sm-hidden { display: none; } /* Hidden on small screens */<br>
-                    .mc-md-block { display: block; } /* Block on medium+ screens */<br>
-                    .mc-lg-flex { display: flex; } /* Flex on large+ screens */
-                </code>
-            </div>
-        </section>
-        
-        <!-- Section 11: Additional Utilities -->
-        <section class="demo-section">
-            <h2 class="demo-title">Additional Utility Classes</h2>
-            <p>Width, height, opacity, cursor, overflow, and positioning utilities:</p>
-            
-            <div class="component-demo">
-                <h3 class="mc-text-lg mc-font-bold">Width & Height</h3>
-                <div class="mc-flex mc-gap-2 mc-mb-4">
-                    <div class="mc-w-25 mc-h-25 mc-bg-dirt mc-p-2">.mc-w-25 .mc-h-25</div>
-                    <div class="mc-w-50 mc-h-50 mc-bg-grass mc-p-2">.mc-w-50 .mc-h-50</div>
-                    <div class="mc-w-75 mc-h-75 mc-bg-water mc-p-2">.mc-w-75 .mc-h-75</div>
-                    <div class="mc-w-100 mc-h-25 mc-bg-lava mc-p-2">.mc-w-100 .mc-h-25</div>
-                </div>
-                
-                <h3 class="mc-text-lg mc-font-bold mc-mt-6">Opacity</h3>
-                <div class="mc-flex mc-gap-2 mc-mb-4">
-                    <div class="mc-opacity-100 mc-bg-dirt mc-p-2">100% Opacity</div>
-                    <div class="mc-opacity-75 mc-bg-dirt mc-p-2">75% Opacity</div>
-                    <div class="mc-opacity-50 mc-bg-dirt mc-p-2">50% Opacity</div>
-                    <div class="mc-opacity-25 mc-bg-dirt mc-p-2">25% Opacity</div>
-                    <div class="mc-opacity-0 mc-bg-dirt mc-p-2">0% Opacity</div>
-                </div>
-                
-                <h3 class="mc-text-lg mc-font-bold mc-mt-6">Cursor & Overflow</h3>
-                <div class="mc-flex mc-gap-2 mc-mb-4">
-                    <div class="mc-cursor-pointer mc-bg-grass mc-p-3">Pointer Cursor</div>
-                    <div class="mc-cursor-default mc-bg-water mc-p-3">Default Cursor</div>
-                    <div class="mc-cursor-not-allowed mc-bg-lava mc-p-3">Not Allowed Cursor</div>
-                </div>
-                
-                <div class="mc-overflow-hidden mc-h-50 mc-bg-stone-light mc-p-2 mc-mb-4" style="height: 100px;">
-                    <div>Overflow Hidden - This text is cut off if it exceeds the container height.</div>
-                    <div>Line 2</div>
-                    <div>Line 3</div>
-                    <div>Line 4</div>
-                    <div>Line 5</div>
-                </div>
-                
-                <h3 class="mc-text-lg mc-font-bold mc-mt-6">Positioning</h3>
-                <div class="mc-position-relative mc-bg-snow mc-border mc-p-4" style="height: 150px;">
-                    Relative Container
-                    <div class="mc-position-absolute mc-top-0 mc-right-0 mc-bg-dirt mc-p-2">
-                        Absolute Top Right
-                    </div>
-                    <div class="mc-position-absolute mc-bottom-0 mc-left-0 mc-bg-grass mc-p-2">
-                        Absolute Bottom Left
-                    </div>
-                </div>
-                
-                <h3 class="mc-text-lg mc-font-bold mc-mt-6">Z-index</h3>
-                <div class="mc-relative" style="height: 100px;">
-                    <div class="mc-position-absolute mc-top-0 mc-left-0 mc-z-10 mc-bg-dirt mc-p-3" style="width: 100px; height: 100px;">Z-10</div>
-                    <div class="mc-position-absolute mc-top-4 mc-left-4 mc-z-20 mc-bg-grass mc-p-3" style="width: 100px; height: 100px;">Z-20</div>
-                    <div class="mc-position-absolute mc-top-8 mc-left-8 mc-z-30 mc-bg-water mc-p-3" style="width: 100px; height: 100px;">Z-30</div>
-                </div>
-                
-                <h3 class="mc-text-lg mc-font-bold mc-mt-6">Border Radius</h3>
-                <div class="mc-flex mc-gap-2 mc-mb-4">
-                    <div class="mc-rounded-none mc-bg-dirt mc-p-3">No Radius</div>
-                    <div class="mc-rounded-sm mc-bg-grass mc-p-3">Small Radius</div>
-                    <div class="mc-rounded mc-bg-water mc-p-3">Default Radius</div>
-                    <div class="mc-rounded-lg mc-bg-lava mc-p-3">Large Radius</div>
-                </div>
-            </div>
-        </section>
+    <!-- Back to Top Button -->
+    <div class="mc-back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
     </div>
     
-    <!-- Footer -->
-    <footer class="footer">
+    <!-- Particle Background -->
+    <div class="mc-particles" id="particles"></div>
+    
+    <!-- Navigation -->
+    <nav class="mc-navbar mc-sticky-top mc-texture-dirt">
+        <div class="mc-container-fluid">
+            <a href="#" class="mc-navbar-brand mc-text-gold mc-animate-pulse">
+                <i class="fas fa-cube"></i> PixelCraft CSS
+                <span class="mc-badge mc-badge-primary mc-ml-2">v1.1.0</span>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <ul class="mc-navbar-nav mc-md-flex mc-sm-hidden">
+                <li class="mc-nav-item">
+                    <a href="#home" class="mc-nav-link mc-text-snow">
+                        <i class="fas fa-home mc-mr-2"></i>Home
+                    </a>
+                </li>
+                <li class="mc-nav-item">
+                    <a href="#features" class="mc-nav-link mc-text-snow">
+                        <i class="fas fa-star mc-mr-2"></i>Features
+                    </a>
+                </li>
+                <li class="mc-nav-item">
+                    <a href="#components" class="mc-nav-link mc-text-snow">
+                        <i class="fas fa-cubes mc-mr-2"></i>Components
+                    </a>
+                </li>
+                <li class="mc-nav-item">
+                    <a href="#colors" class="mc-nav-link mc-text-snow">
+                        <i class="fas fa-palette mc-mr-2"></i>Colors
+                    </a>
+                </li>
+                <li class="mc-nav-item">
+                    <a href="#demo" class="mc-nav-link mc-text-snow">
+                        <i class="fas fa-play mc-mr-2"></i>Demo
+                    </a>
+                </li>
+                <li class="mc-nav-item">
+                    <a href="#download" class="mc-btn mc-btn-primary mc-btn-lg">
+                        <i class="fas fa-download mc-mr-2"></i>Download
+                    </a>
+                </li>
+            </ul>
+            
+            <!-- Mobile Navigation Toggle -->
+            <button class="mc-btn mc-btn-primary mc-md-hidden" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <!-- Mobile Navigation Menu -->
+            <div class="mc-dropdown mc-md-hidden" id="mobileMenu">
+                <div class="mc-dropdown-menu mc-w-100 mc-mt-2">
+                    <a href="#home" class="mc-dropdown-item mc-text-center">
+                        <i class="fas fa-home mc-mr-2"></i>Home
+                    </a>
+                    <a href="#features" class="mc-dropdown-item mc-text-center">
+                        <i class="fas fa-star mc-mr-2"></i>Features
+                    </a>
+                    <a href="#components" class="mc-dropdown-item mc-text-center">
+                        <i class="fas fa-cubes mc-mr-2"></i>Components
+                    </a>
+                    <a href="#colors" class="mc-dropdown-item mc-text-center">
+                        <i class="fas fa-palette mc-mr-2"></i>Colors
+                    </a>
+                    <a href="#demo" class="mc-dropdown-item mc-text-center">
+                        <i class="fas fa-play mc-mr-2"></i>Demo
+                    </a>
+                    <a href="#download" class="mc-dropdown-item mc-text-center mc-bg-primary mc-text-snow">
+                        <i class="fas fa-download mc-mr-2"></i>Download
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="mc-hero mc-py-10">
         <div class="mc-container">
-            <p class="mc-font-pixel mc-text-lg">PixelCraft CSS Framework Test</p>
-            <p class="mc-font-mono mc-text-base mc-mt-2">All CSS classes from PixelCraft.css have been demonstrated above.</p>
-            <p class="mc-text-sm mc-mt-2">Framework Version 1.0.0 | Created by Rexxscode</p>
+            <div class="mc-hero-content mc-text-center mc-section-animate">
+                <h1 class="mc-hero-title mc-font-pixel mc-mb-4 mc-text-gold">
+                    <i class="fas fa-cube mc-mr-3"></i>PixelCraft CSS
+                </h1>
+                <p class="mc-hero-subtitle mc-font-pixel mc-mb-6 mc-text-snow mc-max-w-2xl mc-mx-auto">
+                    Framework CSS Bertema Minecraft • Build Amazing Pixel-Style Websites
+                </p>
+                <p class="mc-text-lg mc-mb-8 mc-text-snow-light mc-max-w-3xl mc-mx-auto">
+                    PixelCraft CSS adalah framework CSS open-source yang terinspirasi oleh estetika Minecraft. 
+                    Dengan komponen siap pakai, sistem warna yang lengkap, dan efek pixel-art yang autentik, 
+                    Anda dapat membangun website yang unik dan menarik dalam hitungan menit.
+                </p>
+                
+                <div class="mc-flex mc-justify-center mc-gap-4 mc-flex-wrap mc-mb-12">
+                    <a href="#download" class="mc-btn mc-btn-primary mc-btn-lg mc-animate-pulse">
+                        <i class="fas fa-download mc-mr-2"></i>Download v1.1.0
+                    </a>
+                    <a href="#components" class="mc-btn mc-btn-success mc-btn-lg">
+                        <i class="fas fa-eye mc-mr-2"></i>View Components
+                    </a>
+                    <a href="https://github.com" target="_blank" class="mc-btn mc-btn-dark mc-btn-lg">
+                        <i class="fab fa-github mc-mr-2"></i>GitHub
+                    </a>
+                </div>
+                
+                <!-- Stats Counter -->
+                <div class="mc-grid mc-grid-cols-2 mc-md-grid-cols-4 mc-gap-6 mc-max-w-4xl mc-mx-auto">
+                    <div class="mc-text-center">
+                        <div class="mc-stats-counter" data-count="24">0</div>
+                        <p class="mc-font-pixel mc-text-sm mc-text-gold">Components</p>
+                    </div>
+                    <div class="mc-text-center">
+                        <div class="mc-stats-counter" data-count="16">0</div>
+                        <p class="mc-font-pixel mc-text-sm mc-text-gold">Color Themes</p>
+                    </div>
+                    <div class="mc-text-center">
+                        <div class="mc-stats-counter" data-count="100">0</div>
+                        <p class="mc-font-pixel mc-text-sm mc-text-gold">Utility Classes</p>
+                    </div>
+                    <div class="mc-text-center">
+                        <div class="mc-stats-counter" data-count="0">0</div>
+                        <p class="mc-font-pixel mc-text-sm mc-text-gold">Dependencies</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="mc-py-10 mc-bg-snow-dark">
+        <div class="mc-container">
+            <div class="mc-text-center mc-mb-10 mc-section-animate">
+                <h2 class="mc-text-4xl mc-font-pixel mc-mb-4 mc-text-dirt-dark">
+                    <i class="fas fa-star mc-mr-3"></i>Fitur Utama
+                </h2>
+                <p class="mc-text-lg mc-text-stone mc-max-w-2xl mc-mx-auto">
+                    PixelCraft CSS dilengkapi dengan segala yang Anda butuhkan untuk membangun website bertema Minecraft
+                </p>
+            </div>
+            
+            <div class="mc-grid mc-grid-cols-1 mc-md-grid-cols-3 mc-gap-8">
+                <!-- Feature 1 -->
+                <div class="mc-section-animate">
+                    <div class="mc-feature-card mc-card mc-h-100">
+                        <div class="mc-card-body mc-text-center">
+                            <div class="mc-feature-icon mc-bg-diamond mc-text-snow">
+                                <i class="fas fa-cube fa-2x"></i>
+                            </div>
+                            <h3 class="mc-text-xl mc-font-pixel mc-mb-3 mc-text-dirt-dark">
+                                Authentic Pixel Design
+                            </h3>
+                            <p class="mc-mb-4">
+                                Desain pixel-art yang autentik dengan border tebal, shadow block, dan efek 8-bit yang membuat website terlihat seperti dalam game Minecraft.
+                            </p>
+                            <div class="mc-flex mc-justify-center mc-gap-2">
+                                <span class="mc-badge mc-badge-primary">Pixel Art</span>
+                                <span class="mc-badge mc-badge-diamond">8-bit Style</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="mc-section-animate" style="animation-delay: 0.2s">
+                    <div class="mc-feature-card mc-card mc-h-100">
+                        <div class="mc-card-body mc-text-center">
+                            <div class="mc-feature-icon mc-bg-grass mc-text-dark">
+                                <i class="fas fa-palette fa-2x"></i>
+                            </div>
+                            <h3 class="mc-text-xl mc-font-pixel mc-mb-3 mc-text-dirt-dark">
+                                Complete Color System
+                            </h3>
+                            <p class="mc-mb-4">
+                                16+ warna tema Minecraft dengan variasi gelap dan terang. Setiap warna memiliki kelas untuk background, text, dan border.
+                            </p>
+                            <div class="mc-flex mc-justify-center mc-gap-2">
+                                <span class="mc-badge mc-badge-success">16 Colors</span>
+                                <span class="mc-badge mc-badge-warning">Variations</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="mc-section-animate" style="animation-delay: 0.4s">
+                    <div class="mc-feature-card mc-card mc-h-100">
+                        <div class="mc-card-body mc-text-center">
+                            <div class="mc-feature-icon mc-bg-lava mc-text-snow">
+                                <i class="fas fa-puzzle-piece fa-2x"></i>
+                            </div>
+                            <h3 class="mc-text-xl mc-font-pixel mc-mb-3 mc-text-dirt-dark">
+                                Ready-to-Use Components
+                            </h3>
+                            <p class="mc-mb-4">
+                                Button, card, navbar, modal, carousel, dan 20+ komponen lain yang sudah didesain dengan tema Minecraft. Responsif dan mudah dikustomisasi.
+                            </p>
+                            <div class="mc-flex mc-justify-center mc-gap-2">
+                                <span class="mc-badge mc-badge-danger">24+ Components</span>
+                                <span class="mc-badge mc-badge-info">Responsive</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mc-grid mc-grid-cols-1 mc-md-grid-cols-3 mc-gap-8 mc-mt-8">
+                <!-- Feature 4 -->
+                <div class="mc-section-animate" style="animation-delay: 0.6s">
+                    <div class="mc-feature-card mc-card mc-h-100">
+                        <div class="mc-card-body mc-text-center">
+                            <div class="mc-feature-icon mc-bg-gold mc-text-dark">
+                                <i class="fas fa-mobile-alt fa-2x"></i>
+                            </div>
+                            <h3 class="mc-text-xl mc-font-pixel mc-mb-3 mc-text-dirt-dark">
+                                Fully Responsive
+                            </h3>
+                            <p class="mc-mb-4">
+                                Dibangun dengan sistem grid responsif yang bekerja sempurna di semua perangkat. Mobile-first approach dengan breakpoints yang jelas.
+                            </p>
+                            <div class="mc-flex mc-justify-center mc-gap-2">
+                                <span class="mc-badge mc-badge-warning">Mobile First</span>
+                                <span class="mc-badge mc-badge-success">Flexbox Grid</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="mc-section-animate" style="animation-delay: 0.8s">
+                    <div class="mc-feature-card mc-card mc-h-100">
+                        <div class="mc-card-body mc-text-center">
+                            <div class="mc-feature-icon mc-bg-water mc-text-snow">
+                                <i class="fas fa-bolt fa-2x"></i>
+                            </div>
+                            <h3 class="mc-text-xl mc-font-pixel mc-mb-3 mc-text-dirt-dark">
+                                Utility-First Approach
+                            </h3>
+                            <p class="mc-mb-4">
+                                100+ utility class untuk spacing, warna, typography, flexbox, grid, dan efek khusus. Bangun desain cepat tanpa menulis CSS custom.
+                            </p>
+                            <div class="mc-flex mc-justify-center mc-gap-2">
+                                <span class="mc-badge mc-badge-info">Utility-First</span>
+                                <span class="mc-badge mc-badge-primary">Rapid Development</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="mc-section-animate" style="animation-delay: 1s">
+                    <div class="mc-feature-card mc-card mc-h-100">
+                        <div class="mc-card-body mc-text-center">
+                            <div class="mc-feature-icon mc-bg-obsidian mc-text-snow">
+                                <i class="fas fa-gamepad fa-2x"></i>
+                            </div>
+                            <h3 class="mc-text-xl mc-font-pixel mc-mb-3 mc-text-dirt-dark">
+                                Game-Inspired Elements
+                            </h3>
+                            <p class="mc-mb-4">
+                                Health bar, heart containers, texture patterns, dan elemen khusus bertema game untuk pengalaman yang imersif dan interaktif.
+                            </p>
+                            <div class="mc-flex mc-justify-center mc-gap-2">
+                                <span class="mc-badge mc-badge-dark">Game Elements</span>
+                                <span class="mc-badge mc-badge-success">Immersive</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Components Showcase -->
+    <section id="components" class="mc-py-10 mc-bg-dirt-light mc-texture-dirt">
+        <div class="mc-container">
+            <div class="mc-text-center mc-mb-10 mc-section-animate">
+                <h2 class="mc-text-4xl mc-font-pixel mc-mb-4 mc-text-snow">
+                    <i class="fas fa-cubes mc-mr-3"></i>Komponen & Demo
+                </h2>
+                <p class="mc-text-lg mc-text-snow-light mc-max-w-2xl mc-mx-auto">
+                    Lihat komponen-komponen siap pakai yang tersedia di PixelCraft CSS
+                </p>
+            </div>
+            
+            <!-- Buttons Demo -->
+            <div class="mc-demo-container mc-mb-10 mc-section-animate">
+                <h3 class="mc-demo-title mc-font-pixel">Tombol (Buttons)</h3>
+                <p class="mc-mb-4">Tombol dengan berbagai variasi warna, ukuran, dan state.</p>
+                
+                <div class="mc-flex mc-flex-wrap mc-items-center mc-justify-center mc-gap-3 mc-mb-6">
+                    <button class="mc-btn mc-btn-primary">Primary</button>
+                    <button class="mc-btn mc-btn-secondary">Secondary</button>
+                    <button class="mc-btn mc-btn-success">Success</button>
+                    <button class="mc-btn mc-btn-danger">Danger</button>
+                    <button class="mc-btn mc-btn-warning">Warning</button>
+                    <button class="mc-btn mc-btn-info">Info</button>
+                </div>
+                
+                <div class="mc-flex mc-flex-wrap mc-items-center mc-justify-center mc-gap-3 mc-mb-6">
+                    <button class="mc-btn mc-btn-primary mc-btn-lg">Large Button</button>
+                    <button class="mc-btn mc-btn-success">Normal Button</button>
+                    <button class="mc-btn mc-btn-danger mc-btn-sm">Small Button</button>
+                </div>
+                
+                <div class="mc-flex mc-flex-wrap mc-items-center mc-justify-center mc-gap-3">
+                    <button class="mc-btn mc-btn-primary mc-btn-block mc-mb-2">Block Button</button>
+                </div>
+                
+                <div class="mc-code-block mc-mt-6">
+&lt;!-- Primary Button --&gt;
+&lt;button class="mc-btn mc-btn-primary"&gt;Primary&lt;/button&gt;
+
+&lt;!-- Success Button --&gt;
+&lt;button class="mc-btn mc-btn-success"&gt;Success&lt;/button&gt;
+
+&lt;!-- Large Danger Button --&gt;
+&lt;button class="mc-btn mc-btn-danger mc-btn-lg"&gt;Large Danger&lt;/button&gt;
+
+&lt;!-- Block Button --&gt;
+&lt;button class="mc-btn mc-btn-primary mc-btn-block"&gt;Block Button&lt;/button&gt;
+                </div>
+            </div>
+            
+            <!-- Cards Demo -->
+            <div class="mc-demo-container mc-mb-10 mc-section-animate" style="animation-delay: 0.2s">
+                <h3 class="mc-demo-title mc-font-pixel">Kartu (Cards)</h3>
+                <p class="mc-mb-4">Kartu dengan header, body, dan footer yang dapat dikustomisasi.</p>
+                
+                <div class="mc-grid mc-grid-cols-1 mc-md-grid-cols-3 mc-gap-6">
+                    <div class="mc-card mc-block-effect">
+                        <div class="mc-card-header mc-bg-dirt mc-text-snow mc-font-pixel">
+                            <i class="fas fa-mountain mc-mr-2"></i> Dirt Block
+                        </div>
+                        <div class="mc-card-body">
+                            <h4 class="mc-text-lg mc-font-pixel mc-mb-2 mc-text-dirt-dark">Blok Tanah</h4>
+                            <p class="mc-mb-3">Blok paling umum di Minecraft. Ditemukan di hampir semua bioma dan dapat diubah menjadi tanah berlumut.</p>
+                            <div class="mc-flex mc-justify-between mc-items-center">
+                                <span class="mc-badge mc-badge-primary">Common</span>
+                                <span class="mc-text-sm mc-text-stone">Tool: Shovel</span>
+                            </div>
+                        </div>
+                        <div class="mc-card-footer mc-text-sm mc-text-stone">
+                            <i class="fas fa-info-circle mc-mr-1"></i> Dapat ditambang dengan tangan
+                        </div>
+                    </div>
+                    
+                    <div class="mc-card mc-block-effect">
+                        <div class="mc-card-header mc-bg-stone mc-text-snow mc-font-pixel">
+                            <i class="fas fa-gem mc-mr-2"></i> Stone Block
+                        </div>
+                        <div class="mc-card-body">
+                            <h4 class="mc-text-lg mc-font-pixel mc-mb-2 mc-text-dirt-dark">Blok Batu</h4>
+                            <p class="mc-mb-3">Blok yang kuat dan tahan lama. Dapat diolah menjadi batu halus, andesit, granit, atau diorit.</p>
+                            <div class="mc-flex mc-justify-between mc-items-center">
+                                <span class="mc-badge mc-badge-secondary">Abundant</span>
+                                <span class="mc-text-sm mc-text-stone">Tool: Pickaxe</span>
+                            </div>
+                        </div>
+                        <div class="mc-card-footer mc-text-sm mc-text-stone">
+                            <i class="fas fa-info-circle mc-mr-1"></i> Memerlukan beliung untuk ditambang
+                        </div>
+                    </div>
+                    
+                    <div class="mc-card mc-block-effect">
+                        <div class="mc-card-header mc-bg-wood mc-text-snow mc-font-pixel">
+                            <i class="fas fa-tree mc-mr-2"></i> Wood Block
+                        </div>
+                        <div class="mc-card-body">
+                            <h4 class="mc-text-lg mc-font-pixel mc-mb-2 mc-text-dirt-dark">Blok Kayu</h4>
+                            <p class="mc-mb-3">Sumber daya penting untuk membuat perkakas, bangunan, dan bahan bakar. Tersedia dalam 6 variasi.</p>
+                            <div class="mc-flex mc-justify-between mc-items-center">
+                                <span class="mc-badge mc-badge-warning">Renewable</span>
+                                <span class="mc-text-sm mc-text-stone">Tool: Axe</span>
+                            </div>
+                        </div>
+                        <div class="mc-card-footer mc-text-sm mc-text-stone">
+                            <i class="fas fa-info-circle mc-mr-1"></i> Dapat ditanam kembali
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Alerts Demo -->
+            <div class="mc-demo-container mc-mb-10 mc-section-animate" style="animation-delay: 0.4s">
+                <h3 class="mc-demo-title mc-font-pixel">Peringatan (Alerts)</h3>
+                <p class="mc-mb-4">Komponen alert untuk berbagai jenis pesan.</p>
+                
+                <div class="mc-grid mc-grid-cols-1 mc-md-grid-cols-2 mc-gap-4">
+                    <div class="mc-alert mc-alert-success">
+                        <div class="mc-flex mc-items-start">
+                            <i class="fas fa-check-circle mc-mr-3 mc-text-lg mc-text-grass-dark"></i>
+                            <div>
+                                <h4 class="mc-font-pixel mc-mb-1">Sukses!</h4>
+                                <p class="mc-mb-0">Blok berhasil ditambang dan ditambahkan ke inventory.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mc-alert mc-alert-danger">
+                        <div class="mc-flex mc-items-start">
+                            <i class="fas fa-exclamation-triangle mc-mr-3 mc-text-lg mc-text-lava-dark"></i>
+                            <div>
+                                <h4 class="mc-font-pixel mc-mb-1">Bahaya!</h4>
+                                <p class="mc-mb-0">Creeper terdeteksi di dekat Anda. Segera menjauh!</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mc-alert mc-alert-warning">
+                        <div class="mc-flex mc-items-start">
+                            <i class="fas fa-exclamation-circle mc-mr-3 mc-text-lg mc-text-gold-dark"></i>
+                            <div>
+                                <h4 class="mc-font-pixel mc-mb-1">Peringatan!</h4>
+                                <p class="mc-mb-0">Daya tahan perkakas Anda hampir habis. Perbaiki segera!</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mc-alert mc-alert-info">
+                        <div class="mc-flex mc-items-start">
+                            <i class="fas fa-info-circle mc-mr-3 mc-text-lg mc-text-water-dark"></i>
+                            <div>
+                                <h4 class="mc-font-pixel mc-mb-1">Informasi!</h4>
+                                <p class="mc-mb-0">Anda menemukan bijih berlian. Gunakan beliung besi atau berlian.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Progress & Health Bars -->
+            <div class="mc-demo-container mc-section-animate" style="animation-delay: 0.6s">
+                <h3 class="mc-demo-title mc-font-pixel">Progress & Health Bars</h3>
+                <p class="mc-mb-4">Indikator progress dan health dengan tema Minecraft.</p>
+                
+                <div class="mc-grid mc-grid-cols-1 mc-md-grid-cols-2 mc-gap-8">
+                    <div>
+                        <h4 class="mc-text-lg mc-font-pixel mc-mb-3 mc-text-dirt-dark">Progress Bars</h4>
+                        
+                        <div class="mc-mb-4">
+                            <p class="mc-mb-2">Mining Progress: <span class="mc-font-pixel">75%</span></p>
+                            <div class="mc-progress mc-mb-4">
+                                <div class="mc-progress-bar" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mc-mb-4">
+                            <p class="mc-mb-2">Crafting Progress: <span class="mc-font-pixel">45%</span></p>
+                            <div class="mc-progress mc-mb-4">
+                                <div class="mc-progress-bar mc-bg-diamond" style="width: 45%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <p class="mc-mb-2">Building Progress: <span class="mc-font-pixel">90%</span></p>
+                            <div class="mc-progress mc-mb-4">
+                                <div class="mc-progress-bar mc-bg-grass" style="width: 90%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="mc-text-lg mc-font-pixel mc-mb-3 mc-text-dirt-dark">Health & Hunger</h4>
+                        
+                        <div class="mc-mb-6">
+                            <p class="mc-mb-2">Health: <span class="mc-font-pixel">12/20</span></p>
+                            <div class="mc-health-bar mc-mb-4">
+                                <div class="mc-health-fill" style="width: 60%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mc-mb-6">
+                            <p class="mc-mb-2">Hunger: <span class="mc-font-pixel">8/20</span></p>
+                            <div class="mc-health-bar mc-mb-4">
+                                <div class="mc-health-fill" style="width: 40%; background: linear-gradient(90deg, #FFD700, #FF8C00);"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <p class="mc-mb-2">XP Level: <span class="mc-font-pixel">27</span></p>
+                            <div class="mc-progress mc-mb-4">
+                                <div class="mc-progress-bar mc-bg-water" style="width: 65%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Color System -->
+    <section id="colors" class="mc-py-10 mc-bg-snow">
+        <div class="mc-container">
+            <div class="mc-text-center mc-mb-10 mc-section-animate">
+                <h2 class="mc-text-4xl mc-font-pixel mc-mb-4 mc-text-dirt-dark">
+                    <i class="fas fa-palette mc-mr-3"></i>Sistem Warna
+                </h2>
+                <p class="mc-text-lg mc-text-stone mc-max-w-2xl mc-mx-auto">
+                    16 warna tema Minecraft dengan variasi gelap dan terang. Setiap warna memiliki kelas untuk background, text, dan border.
+                </p>
+            </div>
+            
+            <div class="mc-color-grid">
+                <!-- Dirt -->
+                <div class="mc-color-swatch mc-bg-dirt" data-color="dirt">
+                    <div class="mc-p-4 mc-text-center">
+                        <p class="mc-font-pixel mc-text-sm mc-text-snow mc-mb-1">DIRT</p>
+                        <p class="mc-text-xs mc-text-snow-light">#8B4513</p>
+                    </div>
+                </div>
+                
+                <!-- Grass -->
+                <div class="mc-color-swatch mc-bg-grass" data-color="grass">
+                    <div class="mc-p-4 mc-text-center">
+                        <p class="mc-font-pixel mc-text-sm mc-text-dark mc-mb-1">GRASS</p>
+                        <p class="mc-text-xs mc-text-dark">#7CFC00</p>
+                    </div>
+                </div>
+                
+                <!-- Stone -->
+                <div class="mc-color-swatch mc-bg-stone" data-color="stone">
+                    <div class="mc-p-4 mc-text-center">
+                        <p class="mc-font-pixel mc-text-sm mc-text-snow mc-mb-1">STONE</p>
+                        <p class="mc-text-xs mc-text-snow-light">#808080</p>
+                    </div>
+                </div>
+                
+                <!-- Wood -->
+                <div class="mc-color-swatch mc-bg-wood" data-color="wood">
+                    <div class="mc-p-4 mc-text-center">
+                        <p class="mc-font-pixel mc-text-sm mc-text-snow mc-mb-1">WOOD</p>
+                        <p class="mc-text-xs mc-text-snow-light">#8B4513</p>
+                    </div>
+                </div>
+                
+                <!-- Water -->
+                <div class="mc-color-swatch mc-bg-water" data-color="water">
+                    <div class="mc-p-4 mc-text-center">
+                        <p class="mc-font-pixel mc-text-sm mc-text-snow mc-mb-1">WATER</p>
+                        <p class="mc-text-xs mc-text-snow-light">#1E90FF</p>
+                    </div>
+                </div>
+                
+                <!-- Lava -->
+                <div class="mc-color-swatch mc-bg-lava" data-color="lava">
+                    <div class="mc-p-4 mc-text-center">
+                        <p class="mc-font-pixel mc-text-sm mc-text-snow mc-mb-1">LAVA</p>
+                        <p class="mc-text-xs mc-text-snow-light">#FF4500</p>
+                    </div>
+                </div>
+                
+                <!-- Diamond -->
+                <div class="mc-color-swatch mc-bg-diamond" data-color="diamond">
+                    <div class="mc-p-4 mc-text-center">
+                        <p class="mc-font-pixel mc-text-sm mc-text-snow mc-mb-1">DIAMOND</p>
+                        <p class="mc-text-xs mc-text-snow-light">#00CED1</p>
+                    </div>
+                </div>
+                
+                <!-- Gold -->
+                <div class="mc-color-swatch mc-bg-gold" data-color="gold">
+                    <div class="mc-p-4 mc-text-center">
+                        <p class="mc-font-pixel mc-text-sm mc-text-dark mc-mb-1">GOLD</p>
+                        <p class="mc-text-xs mc-text-dark">#FFD700</p>
+                    </div>
+                </div>
+                
+                <!-- Iron -->
+                <div class="mc-color-swatch mc-bg-iron" data-color="iron">
+                    <div class="mc-p-4 mc-text-center">
+                        <p class="mc-font-pixel mc-text-sm mc-text-dark mc-mb-1">IRON</p>
+                        <p class="mc-text-xs mc-text-dark">#C0C0C0</p>
+                    </div>
+                </div>
+                
+                <!-- Coal -->
+                <div class="mc-color-swatch mc-bg-coal" data-color="coal">
+                    <div class="mc-p-4 mc-text-center">
+                        <p class="mc-font-pixel mc-text-sm mc-text-snow mc-mb-1">COAL</p>
+                        <p class="mc-text-xs mc-text-snow-light">#2F4F4F</p>
+                    </div>
+                </div>
+                
+                <!-- Obsidian -->
+                <div class="mc-color-swatch mc-bg-obsidian" data-color="obsidian">
+                    <div class="mc-p-4 mc-text-center">
+                        <p class="mc-font-pixel mc-text-sm mc-text-snow mc-mb-1">OBSIDIAN</p>
+                        <p class="mc-text-xs mc-text-snow-light">#191970</p>
+                    </div>
+                </div>
+                
+                <!-- Nether -->
+                <div class="mc-color-swatch mc-bg-nether" data-color="nether">
+                    <div class="mc-p-4 mc-text-center">
+                        <p class="mc-font-pixel mc-text-sm mc-text-snow mc-mb-1">NETHER</p>
+                        <p class="mc-text-xs mc-text-snow-light">#8B0000</p>
+                    </div>
+                </div>
+                
+                <!-- End -->
+                <div class="mc-color-swatch mc-bg-end" data-color="end">
+                    <div class="mc-p-4 mc-text-center">
+                        <p class="mc-font-pixel mc-text-sm mc-text-snow mc-mb-1">END</p>
+                        <p class="mc-text-xs mc-text-snow-light">#4B0082</p>
+                    </div>
+                </div>
+                
+                <!-- Sand -->
+                <div class="mc-color-swatch mc-bg-sand" data-color="sand">
+                    <div class="mc-p-4 mc-text-center">
+                        <p class="mc-font-pixel mc-text-sm mc-text-dark mc-mb-1">SAND</p>
+                        <p class="mc-text-xs mc-text-dark">#F4A460</p>
+                    </div>
+                </div>
+                
+                <!-- Snow -->
+                <div class="mc-color-swatch mc-bg-snow-light" data-color="snow">
+                    <div class="mc-p-4 mc-text-center mc-border">
+                        <p class="mc-font-pixel mc-text-sm mc-text-dark mc-mb-1">SNOW</p>
+                        <p class="mc-text-xs mc-text-dark">#F8F8FF</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mc-text-center mc-mt-8 mc-section-animate">
+                <div class="mc-code-block mc-max-w-2xl mc-mx-auto">
+/* Contoh penggunaan kelas warna */
+&lt;div class="mc-bg-dirt mc-text-snow"&gt;...&lt;/div&gt;
+&lt;div class="mc-bg-grass mc-text-dark"&gt;...&lt;/div&gt;
+&lt;div class="mc-bg-diamond mc-text-snow"&gt;...&lt;/div&gt;
+
+/* Kelas text color */
+&lt;p class="mc-text-gold"&gt;Text emas&lt;/p&gt;
+&lt;p class="mc-text-lava"&gt;Text lava&lt;/p&gt;
+
+/* Kelas border color */
+&lt;div class="mc-border mc-border-grass"&gt;...&lt;/div&gt;
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo & Download -->
+    <section id="demo" class="mc-py-10 mc-bg-dirt mc-texture-dirt">
+        <div class="mc-container">
+            <div class="mc-text-center mc-mb-10 mc-section-animate">
+                <h2 class="mc-text-4xl mc-font-pixel mc-mb-4 mc-text-snow">
+                    <i class="fas fa-play mc-mr-3"></i>Coba Sekarang
+                </h2>
+                <p class="mc-text-lg mc-text-snow-light mc-max-w-2xl mc-mx-auto">
+                    Coba komponen interaktif PixelCraft CSS dan download untuk digunakan di project Anda
+                </p>
+            </div>
+            
+            <div class="mc-grid mc-grid-cols-1 mc-lg-grid-cols-2 mc-gap-10">
+                <!-- Interactive Demo -->
+                <div class="mc-section-animate">
+                    <div class="mc-interactive-demo mc-h-100">
+                        <h3 class="mc-text-2xl mc-font-pixel mc-mb-6 mc-text-dirt-dark mc-text-center">
+                            Demo Interaktif
+                        </h3>
+                        
+                        <!-- Dropdown Demo -->
+                        <div class="mc-mb-8">
+                            <h4 class="mc-text-lg mc-font-pixel mc-mb-3 mc-text-stone-dark">Dropdown Menu</h4>
+                            <div class="mc-dropdown">
+                                <button class="mc-btn mc-btn-secondary mc-dropdown-toggle mc-w-100 mc-text-left">
+                                    <i class="fas fa-cube mc-mr-2"></i> Pilih Blok Minecraft
+                                    <i class="fas fa-caret-down mc-ml-auto"></i>
+                                </button>
+                                <div class="mc-dropdown-menu mc-w-100">
+                                    <a href="#" class="mc-dropdown-item">
+                                        <i class="fas fa-mountain mc-mr-2"></i> Blok Tanah
+                                    </a>
+                                    <a href="#" class="mc-dropdown-item">
+                                        <i class="fas fa-gem mc-mr-2"></i> Blok Batu
+                                    </a>
+                                    <a href="#" class="mc-dropdown-item">
+                                        <i class="fas fa-tree mc-mr-2"></i> Blok Kayu
+                                    </a>
+                                    <a href="#" class="mc-dropdown-item">
+                                        <i class="fas fa-gem mc-mr-2 mc-text-diamond"></i> Blok Berlian
+                                    </a>
+                                    <a href="#" class="mc-dropdown-item">
+                                        <i class="fas fa-coins mc-mr-2 mc-text-gold"></i> Blok Emas
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Accordion Demo -->
+                        <div class="mc-mb-8">
+                            <h4 class="mc-text-lg mc-font-pixel mc-mb-3 mc-text-stone-dark">Accordion FAQ</h4>
+                            <div class="mc-accordion">
+                                <div class="mc-accordion-item">
+                                    <div class="mc-accordion-header">
+                                        <span>Bagaimana cara menggunakan PixelCraft CSS?</span>
+                                        <span class="mc-accordion-icon">▼</span>
+                                    </div>
+                                    <div class="mc-accordion-content">
+                                        <p>Tambahkan link ke file CSS di head dokumen HTML Anda, lalu gunakan kelas-kelas yang tersedia di dokumentasi.</p>
+                                    </div>
+                                </div>
+                                <div class="mc-accordion-item">
+                                    <div class="mc-accordion-header">
+                                        <span>Apakah framework ini responsif?</span>
+                                        <span class="mc-accordion-icon">▼</span>
+                                    </div>
+                                    <div class="mc-accordion-content">
+                                        <p>Ya, PixelCraft CSS dibangun dengan pendekatan mobile-first dan memiliki utility classes responsif untuk semua breakpoints.</p>
+                                    </div>
+                                </div>
+                                <div class="mc-accordion-item">
+                                    <div class="mc-accordion-header">
+                                        <span>Dapatkah saya mengkustomisasi warnanya?</span>
+                                        <span class="mc-accordion-icon">▼</span>
+                                    </div>
+                                    <div class="mc-accordion-content">
+                                        <p>Tentu! Anda dapat mengubah variabel CSS di file utama atau menimpa style sesuai kebutuhan project Anda.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Spinner Demo -->
+                        <div>
+                            <h4 class="mc-text-lg mc-font-pixel mc-mb-3 mc-text-stone-dark">Loading Spinners</h4>
+                            <div class="mc-flex mc-justify-around mc-items-center mc-py-4">
+                                <div class="mc-text-center">
+                                    <div class="mc-spinner mc-spinner-sm mc-mb-2"></div>
+                                    <p class="mc-text-xs">Small</p>
+                                </div>
+                                <div class="mc-text-center">
+                                    <div class="mc-spinner mc-mb-2"></div>
+                                    <p class="mc-text-xs">Default</p>
+                                </div>
+                                <div class="mc-text-center">
+                                    <div class="mc-spinner mc-spinner-lg mc-mb-2"></div>
+                                    <p class="mc-text-xs">Large</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Download Section -->
+                <div id="download" class="mc-section-animate" style="animation-delay: 0.3s">
+                    <div class="mc-download-card mc-card mc-h-100">
+                        <div class="mc-card-header mc-bg-obsidian mc-text-snow mc-text-center mc-font-pixel">
+                            <i class="fas fa-download mc-mr-2"></i> Download PixelCraft CSS
+                        </div>
+                        <div class="mc-card-body">
+                            <h3 class="mc-text-2xl mc-font-pixel mc-mb-4 mc-text-dirt-dark mc-text-center">
+                                Instalasi Mudah
+                            </h3>
+                            
+                            <div class="mc-mb-6">
+                                <h4 class="mc-text-lg mc-font-pixel mc-mb-3 mc-text-stone-dark">
+                                    <i class="fas fa-cloud-download-alt mc-mr-2"></i> Via CDN (Rekomendasi)
+                                </h4>
+                                <div class="mc-code-block mc-mb-4">
+&lt;!-- PixelCraft CSS --&gt;
+&lt;link rel="stylesheet" 
+      href="https://cdn.jsdelivr.net/gh/yourusername/pixelcraftcss/PixelCraft.css"&gt;
+
+&lt;!-- Font Pixel --&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" 
+      rel="stylesheet"&gt;
+
+&lt;!-- Font Awesome (Opsional) --&gt;
+&lt;link rel="stylesheet" 
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&gt;
+                                </div>
+                            </div>
+                            
+                            <div class="mc-mb-6">
+                                <h4 class="mc-text-lg mc-font-pixel mc-mb-3 mc-text-stone-dark">
+                                    <i class="fas fa-file-download mc-mr-2"></i> Manual Download
+                                </h4>
+                                <div class="mc-alert mc-alert-info">
+                                    <div class="mc-flex">
+                                        <i class="fas fa-info-circle mc-mr-3 mc-text-lg"></i>
+                                        <div>
+                                            <p class="mc-mb-0">Download file CSS dan sertakan di project Anda. Tidak ada dependencies!</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mc-grid mc-grid-cols-2 mc-gap-4 mc-mt-4">
+                                    <a href="#" class="mc-btn mc-btn-primary mc-btn-block">
+                                        <i class="fas fa-download mc-mr-2"></i> PixelCraft.css
+                                    </a>
+                                    <a href="#" class="mc-btn mc-btn-secondary mc-btn-block">
+                                        <i class="fas fa-file-archive mc-mr-2"></i> Full Package (ZIP)
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="mc-mb-6">
+                                <h4 class="mc-text-lg mc-font-pixel mc-mb-3 mc-text-stone-dark">
+                                    <i class="fab fa-npm mc-mr-2"></i> Via NPM (Coming Soon)
+                                </h4>
+                                <div class="mc-code-block mc-mb-4">
+npm install pixelcraftcss
+                                </div>
+                            </div>
+                            
+                            <div class="mc-text-center mc-pt-4 mc-border-top">
+                                <a href="#" class="mc-btn mc-btn-success mc-btn-lg mc-animate-pulse mc-mb-3">
+                                    <i class="fas fa-rocket mc-mr-2"></i> Get Started Now
+                                </a>
+                                <p class="mc-text-sm mc-text-stone">
+                                    Versi 1.1.0 • Ukuran file: 45KB (gzipped) • License: MIT
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Start Example -->
+            <div class="mc-mt-12 mc-section-animate" style="animation-delay: 0.6s">
+                <div class="mc-demo-container">
+                    <h3 class="mc-demo-title mc-font-pixel">Quick Start Example</h3>
+                    
+                    <div class="mc-grid mc-grid-cols-1 mc-lg-grid-cols-2 mc-gap-8">
+                        <div>
+                            <h4 class="mc-text-lg mc-font-pixel mc-mb-3 mc-text-dirt-dark">HTML Code</h4>
+                            <div class="mc-code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;My Minecraft Site&lt;/title&gt;
+    &lt;!-- Include PixelCraft CSS --&gt;
+    &lt;link rel="stylesheet" href="pixelcraft.css"&gt;
+    &lt;link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" 
+          rel="stylesheet"&gt;
+&lt;/head&gt;
+&lt;body class="mc-reset"&gt;
+    &lt;nav class="mc-navbar mc-bg-dirt"&gt;
+        &lt;div class="mc-container"&gt;
+            &lt;a href="#" class="mc-navbar-brand mc-text-gold"&gt;
+                &lt;i class="fas fa-cube"&gt;&lt;/i&gt; My Minecraft Site
+            &lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/nav&gt;
+    
+    &lt;section class="mc-py-8 mc-bg-stone"&gt;
+        &lt;div class="mc-container"&gt;
+            &lt;h1 class="mc-text-3xl mc-font-pixel mc-text-center mc-text-snow"&gt;
+                Welcome to My Minecraft World!
+            &lt;/h1&gt;
+            &lt;button class="mc-btn mc-btn-primary mc-btn-lg mc-mt-4"&gt;
+                Start Adventure
+            &lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/section&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="mc-text-lg mc-font-pixel mc-mb-3 mc-text-dirt-dark">Live Preview</h4>
+                            <div class="mc-bg-stone-light mc-p-6 mc-border mc-h-100 mc-flex mc-flex-col mc-justify-center">
+                                <div class="mc-text-center">
+                                    <h3 class="mc-text-2xl mc-font-pixel mc-mb-4 mc-text-dirt-dark">
+                                        <i class="fas fa-cube mc-mr-2"></i> My Minecraft Site
+                                    </h3>
+                                    <p class="mc-mb-4 mc-text-stone">Welcome to My Minecraft World!</p>
+                                    <button class="mc-btn mc-btn-primary mc-btn-lg">
+                                        <i class="fas fa-play mc-mr-2"></i> Start Adventure
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mc-footer mc-py-8">
+        <div class="mc-container">
+            <div class="mc-grid mc-grid-cols-1 mc-md-grid-cols-4 mc-gap-8 mc-mb-8">
+                <div>
+                    <h4 class="mc-text-xl mc-font-pixel mc-mb-4 mc-text-gold">
+                        <i class="fas fa-cube mc-mr-2"></i> PixelCraft CSS
+                    </h4>
+                    <p class="mc-text-sm mc-text-snow-light mc-mb-4">
+                        Framework CSS open-source dengan tema Minecraft. Bangun website yang unik dan menarik dengan estetika pixel-art.
+                    </p>
+                    <div class="mc-flex mc-gap-3">
+                        <a href="#" class="mc-btn mc-btn-primary mc-btn-sm">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="mc-btn mc-btn-info mc-btn-sm">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="mc-btn mc-btn-danger mc-btn-sm">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="mc-btn mc-btn-success mc-btn-sm">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h5 class="mc-font-pixel mc-mb-4 mc-text-snow">Resources</h5>
+                    <ul class="mc-list-group mc-bg-transparent mc-border-none">
+                        <li class="mc-list-item mc-bg-transparent mc-border-none mc-py-2">
+                            <a href="#home" class="mc-text-snow-light mc-text-decoration-none">
+                                <i class="fas fa-chevron-right mc-mr-2 mc-text-grass"></i> Documentation
+                            </a>
+                        </li>
+                        <li class="mc-list-item mc-bg-transparent mc-border-none mc-py-2">
+                            <a href="#components" class="mc-text-snow-light mc-text-decoration-none">
+                                <i class="fas fa-chevron-right mc-mr-2 mc-text-grass"></i> Components
+                            </a>
+                        </li>
+                        <li class="mc-list-item mc-bg-transparent mc-border-none mc-py-2">
+                            <a href="#demo" class="mc-text-snow-light mc-text-decoration-none">
+                                <i class="fas fa-chevron-right mc-mr-2 mc-text-grass"></i> Examples
+                            </a>
+                        </li>
+                        <li class="mc-list-item mc-bg-transparent mc-border-none mc-py-2">
+                            <a href="#" class="mc-text-snow-light mc-text-decoration-none">
+                                <i class="fas fa-chevron-right mc-mr-2 mc-text-grass"></i> Tutorials
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="mc-font-pixel mc-mb-4 mc-text-snow">Community</h5>
+                    <ul class="mc-list-group mc-bg-transparent mc-border-none">
+                        <li class="mc-list-item mc-bg-transparent mc-border-none mc-py-2">
+                            <a href="#" class="mc-text-snow-light mc-text-decoration-none">
+                                <i class="fas fa-chevron-right mc-mr-2 mc-text-gold"></i> GitHub Issues
+                            </a>
+                        </li>
+                        <li class="mc-list-item mc-bg-transparent mc-border-none mc-py-2">
+                            <a href="#" class="mc-text-snow-light mc-text-decoration-none">
+                                <i class="fas fa-chevron-right mc-mr-2 mc-text-gold"></i> Discord Server
+                            </a>
+                        </li>
+                        <li class="mc-list-item mc-bg-transparent mc-border-none mc-py-2">
+                            <a href="#" class="mc-text-snow-light mc-text-decoration-none">
+                                <i class="fas fa-chevron-right mc-mr-2 mc-text-gold"></i> Twitter
+                            </a>
+                        </li>
+                        <li class="mc-list-item mc-bg-transparent mc-border-none mc-py-2">
+                            <a href="#" class="mc-text-snow-light mc-text-decoration-none">
+                                <i class="fas fa-chevron-right mc-mr-2 mc-text-gold"></i> Contribute
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="mc-font-pixel mc-mb-4 mc-text-snow">Legal</h5>
+                    <ul class="mc-list-group mc-bg-transparent mc-border-none">
+                        <li class="mc-list-item mc-bg-transparent mc-border-none mc-py-2">
+                            <a href="#" class="mc-text-snow-light mc-text-decoration-none">
+                                <i class="fas fa-chevron-right mc-mr-2 mc-text-diamond"></i> MIT License
+                            </a>
+                        </li>
+                        <li class="mc-list-item mc-bg-transparent mc-border-none mc-py-2">
+                            <a href="#" class="mc-text-snow-light mc-text-decoration-none">
+                                <i class="fas fa-chevron-right mc-mr-2 mc-text-diamond"></i> Privacy Policy
+                            </a>
+                        </li>
+                        <li class="mc-list-item mc-bg-transparent mc-border-none mc-py-2">
+                            <a href="#" class="mc-text-snow-light mc-text-decoration-none">
+                                <i class="fas fa-chevron-right mc-mr-2 mc-text-diamond"></i> Terms of Use
+                            </a>
+                        </li>
+                        <li class="mc-list-item mc-bg-transparent mc-border-none mc-py-2">
+                            <a href="#" class="mc-text-snow-light mc-text-decoration-none">
+                                <i class="fas fa-chevron-right mc-mr-2 mc-text-diamond"></i> Attribution
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mc-border-top mc-pt-6 mc-text-center">
+                <p class="mc-mb-2 mc-font-pixel mc-text-gold">
+                    <i class="fas fa-cube mc-mr-2"></i> PixelCraft CSS v1.1.0
+                </p>
+                <p class="mc-text-sm mc-text-snow-light mc-mb-4">
+                    Dibuat dengan <i class="fas fa-heart mc-text-lava"></i> oleh Rexxscode • 
+                    Terinspirasi oleh Minecraft © Mojang Studios
+                </p>
+                <p class="mc-text-xs mc-text-snow-light">
+                    Minecraft adalah merek dagang dari Mojang Studios. PixelCraft CSS tidak berafiliasi dengan Mojang Studios.
+                    Framework ini dibuat untuk tujuan edukasi dan penggunaan pribadi.
+                </p>
+            </div>
         </div>
     </footer>
-    
+
     <script>
-        // Add interactive functionality for demonstration
+        // DOM Ready
         document.addEventListener('DOMContentLoaded', function() {
-            // Add click effects to buttons
-            const buttons = document.querySelectorAll('.mc-btn');
-            buttons.forEach(button => {
-                button.addEventListener('click', function() {
-                    alert('Button clicked: ' + this.textContent);
-                });
+            // Initialize components
+            initMobileMenu();
+            initDropdowns();
+            initAccordion();
+            initScrollProgress();
+            initBackToTop();
+            initCounters();
+            initParticles();
+            initScrollAnimations();
+            initColorSwatches();
+            
+            // Add toast function for demo
+            window.showToast = function(message, type = 'info') {
+                const toastContainer = document.getElementById('toastContainer');
+                if (!toastContainer) return;
+                
+                const toastId = 'toast-' + Date.now();
+                const toast = document.createElement('div');
+                toast.className = `mc-toast mc-toast-${type}`;
+                toast.id = toastId;
+                toast.innerHTML = `
+                    <div class="mc-toast-header">
+                        <strong>PixelCraft CSS</strong>
+                        <button class="mc-toast-close" onclick="dismissToast('${toastId}')">&times;</button>
+                    </div>
+                    <div class="mc-toast-body">${message}</div>
+                `;
+                
+                toastContainer.appendChild(toast);
+                
+                // Show toast
+                setTimeout(() => toast.classList.add('show'), 10);
+                
+                // Auto dismiss after 5 seconds
+                setTimeout(() => dismissToast(toastId), 5000);
+            };
+            
+            // Global dismiss toast function
+            window.dismissToast = function(toastId) {
+                const toast = document.getElementById(toastId);
+                if (toast) {
+                    toast.classList.remove('show');
+                    setTimeout(() => {
+                        if (toast.parentElement) toast.parentElement.removeChild(toast);
+                    }, 300);
+                }
+            };
+            
+            // Modal functions
+            window.openModal = function() {
+                const modal = document.getElementById('demoModal');
+                if (modal) modal.classList.add('active');
+            };
+            
+            window.closeModal = function() {
+                const modal = document.getElementById('demoModal');
+                if (modal) modal.classList.remove('active');
+            };
+            
+            // Close modal on outside click
+            document.addEventListener('click', function(e) {
+                const modal = document.getElementById('demoModal');
+                if (modal && modal.classList.contains('active') && e.target === modal) {
+                    modal.classList.remove('active');
+                }
             });
             
-            // Add hover effect to tooltips
-            const tooltips = document.querySelectorAll('.mc-tooltip');
-            tooltips.forEach(tooltip => {
-                tooltip.addEventListener('mouseenter', function() {
-                    this.style.backgroundColor = '#8B4513';
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#') return;
+                    
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        const headerHeight = document.querySelector('.mc-navbar').offsetHeight;
+                        const targetPosition = target.offsetTop - headerHeight;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        const mobileMenu = document.getElementById('mobileMenu');
+                        if (mobileMenu && mobileMenu.classList.contains('active')) {
+                            mobileMenu.classList.remove('active');
+                        }
+                    }
                 });
-                tooltip.addEventListener('mouseleave', function() {
-                    this.style.backgroundColor = '';
-                });
-            });
-            
-            // Animate progress bars
-            const progressBars = document.querySelectorAll('.mc-progress-bar');
-            progressBars.forEach((bar, index) => {
-                // Already set with inline styles
             });
         });
+        
+        // Initialize mobile menu
+        function initMobileMenu() {
+            const toggle = document.getElementById('mobileMenuToggle');
+            const menu = document.getElementById('mobileMenu');
+            
+            if (toggle && menu) {
+                toggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    menu.classList.toggle('active');
+                });
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+                        menu.classList.remove('active');
+                    }
+                });
+            }
+        }
+        
+        // Initialize dropdowns
+        function initDropdowns() {
+            const dropdowns = document.querySelectorAll('.mc-dropdown:not(#mobileMenu)');
+            
+            dropdowns.forEach(dropdown => {
+                const toggle = dropdown.querySelector('.mc-dropdown-toggle');
+                if (toggle) {
+                    toggle.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        // Close other dropdowns
+                        dropdowns.forEach(d => {
+                            if (d !== dropdown) d.classList.remove('active');
+                        });
+                        
+                        // Toggle current dropdown
+                        dropdown.classList.toggle('active');
+                    });
+                }
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function() {
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            });
+        }
+        
+        // Initialize accordion
+        function initAccordion() {
+            const accordionHeaders = document.querySelectorAll('.mc-accordion-header');
+            
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const item = this.parentElement;
+                    const isActive = item.classList.contains('active');
+                    
+                    // Close all accordion items
+                    document.querySelectorAll('.mc-accordion-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Open clicked item if it wasn't active
+                    if (!isActive) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        }
+        
+        // Initialize scroll progress bar
+        function initScrollProgress() {
+            const progressBar = document.getElementById('scrollProgress');
+            if (!progressBar) return;
+            
+            window.addEventListener('scroll', function() {
+                const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (window.scrollY / windowHeight) * 100;
+                progressBar.style.width = scrolled + '%';
+            });
+        }
+        
+        // Initialize back to top button
+        function initBackToTop() {
+            const button = document.getElementById('backToTop');
+            if (!button) return;
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    button.classList.add('show');
+                } else {
+                    button.classList.remove('show');
+                }
+            });
+            
+            button.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+        
+        // Initialize animated counters
+        function initCounters() {
+            const counters = document.querySelectorAll('.mc-stats-counter');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count') || counter.textContent);
+                let current = 0;
+                const increment = target / 100;
+                const duration = 2000; // 2 seconds
+                const stepTime = duration / 100;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        counter.textContent = Math.floor(current);
+                        setTimeout(updateCounter, stepTime);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+                
+                // Start counter when element is in viewport
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            updateCounter();
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+                
+                observer.observe(counter);
+            });
+        }
+        
+        // Initialize particles background
+        function initParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'mc-particle';
+                
+                // Random position
+                const left = Math.random() * 100;
+                const size = Math.random() * 4 + 2;
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                
+                particle.style.left = `${left}%`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Random color
+                const colors = [
+                    'var(--mc-diamond)',
+                    'var(--mc-gold)',
+                    'var(--mc-grass)',
+                    'var(--mc-lava)',
+                    'var(--mc-water)'
+                ];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.backgroundColor = color;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        // Initialize scroll animations
+        function initScrollAnimations() {
+            const animatedElements = document.querySelectorAll('.mc-section-animate');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
+        }
+        
+        // Initialize color swatch interactions
+        function initColorSwatches() {
+            const swatches = document.querySelectorAll('.mc-color-swatch');
+            
+            swatches.forEach(swatch => {
+                swatch.addEventListener('click', function() {
+                    const color = this.getAttribute('data-color');
+                    const colorName = this.querySelector('.mc-font-pixel').textContent;
+                    const colorCode = this.querySelector('.mc-text-xs').textContent;
+                    
+                    // Show toast with color info
+                    showToast(`Color: ${colorName} (${colorCode})<br>Use class: .mc-bg-${color}`, 'info');
+                    
+                    // Add visual feedback
+                    this.style.transform = 'scale(1.2) rotate(5deg)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 300);
+                });
+            });
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + K to focus search (placeholder)
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                showToast('Search shortcut activated!', 'info');
+            }
+            
+            // Escape to close modals/dropdowns
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.mc-modal.active, .mc-dropdown.active').forEach(el => {
+                    el.classList.remove('active');
+                });
+            }
+        });
+        
+        // Performance optimization: Lazy load images
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        const src = img.getAttribute('data-src');
+                        if (src) {
+                            img.src = src;
+                            img.classList.add('loaded');
+                        }
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+        
+        // Add resize observer for responsive adjustments
+        const resizeObserver = new ResizeObserver(entries => {
+            entries.forEach(entry => {
+                // Adjust layout based on container width
+                if (entry.contentRect.width < 768) {
+                    entry.target.classList.add('mobile-view');
+                } else {
+                    entry.target.classList.remove('mobile-view');
+                }
+            });
+        });
+        
+        // Observe main container
+        const mainContainer = document.querySelector('.mc-container');
+        if (mainContainer) {
+            resizeObserver.observe(mainContainer);
+        }
     </script>
 </body>
 </html>
